@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#0d0914">
+  <title>Music Bunny 🎀</title>
+  <script src="https://telegram.org/js/telegram-web-app.js?63"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="orb orb-a"></div><div class="orb orb-b"></div>
+  <main id="app" class="app">
+    <header class="brandbar">
+      <div class="brand-left">
+        <div class="mascot-wrap"><img class="mascot" src="./mascot.png" alt="Music Bunny"><span class="online"></span></div>
+        <div><small>MUSIC BUNNY</small><h1>Hi, <span id="firstName">cutie</span> 🩷</h1></div>
+      </div>
+      <button id="ownerBtn" class="glass owner" aria-label="Owner">𝑶 —</button>
+    </header>
+
+    <section id="homeView" class="view active">
+      <section class="hero card">
+        <div class="hero-copy"><span class="kicker">YOUR MUSIC SPACE</span><h2>Find the song<br><em>stuck in your head.</em></h2><p>Search, play and save it without leaving Telegram.</p></div>
+        <div class="hero-note">♪</div>
+        <form id="searchForm" class="searchbar"><span>⌕</span><input id="searchInput" maxlength="100" autocomplete="off" placeholder="Song or artist…"><button type="submit">Search</button></form>
+      </section>
+
+      <div class="section-title"><div><span>QUICK ACCESS</span><h3>Your little music world</h3></div><b>♡</b></div>
+      <section class="quick-grid">
+        <button class="quick pink" data-nav="favorites"><i>🩷</i><strong>Favorites</strong><small>Your saved songs</small><span>›</span></button>
+        <button class="quick" data-nav="top"><i>🎀</i><strong>Most Requested</strong><small>What everyone loves</small><span>›</span></button>
+        <button class="quick" data-nav="profile"><i>🌸</i><strong>My Profile</strong><small>Your music story</small><span>›</span></button>
+        <button id="groupBtn" class="quick"><i>🎧</i><strong>Add to Group</strong><small>Music with friends</small><span>↗</span></button>
+      </section>
+
+      <section class="mood card"><div class="vinyl"><img src="./mascot.png" alt=""></div><div><span class="kicker">TODAY'S MOOD</span><h4>Soft pink headphones</h4><p>One more song and then we sleep… probably.</p></div><div class="eq"><i></i><i></i><i></i><i></i></div></section>
+    </section>
+
+    <section id="listView" class="view">
+      <div class="page-head"><button class="back" data-back>‹</button><div><span id="listKicker">MUSIC</span><h2 id="listTitle">Results</h2></div><button id="refreshList" class="glass refresh">↻</button></div>
+      <div id="listSub" class="subline"></div>
+      <div id="trackList" class="track-list"></div>
+      <div id="emptyState" class="empty hidden"><div>🐰</div><h3>Nothing here yet</h3><p>Music Bunny is waiting for your first song.</p></div>
+    </section>
+
+    <section id="profileView" class="view">
+      <div class="page-head"><button class="back" data-back>‹</button><div><span>YOUR MUSIC STORY</span><h2>My Profile</h2></div><button id="refreshProfile" class="glass refresh">↻</button></div>
+      <section class="profile-hero card"><img src="./mascot.png" alt=""><div><small id="profileUsername">MUSIC LOVER</small><h2 id="profileName">Music Bunny Friend</h2><span id="profileRank" class="rank">🌱 New Listener</span></div></section>
+      <section class="stats"><div><strong id="statSearch">0</strong><span>Searches</span></div><div><strong id="statFav">0</strong><span>Favorites</span></div><div><strong id="statTogether">0</strong><span>Heart Trail</span></div></section>
+      <section class="profile-grid"><div class="mini-card"><span>🏅 SECRET BADGE</span><strong id="profileBadge">🔒 Secret badge</strong></div><div class="mini-card"><span>🎧 TOP ARTIST</span><strong id="topArtist">Not yet</strong></div><div class="mini-card"><span>🎀 WITH US SINCE</span><strong id="joinedDate">—</strong></div></section>
+      <section class="recent card"><div class="section-title small-title"><div><span>RECENT</span><h3>Last searches</h3></div></div><div id="recentSearches"></div></section>
+    </section>
+
+    <div id="loading" class="loading hidden"><span class="loader"></span><p id="loadingText">Finding your music…</p></div>
+    <div id="toast" class="toast"></div>
+  </main>
+
+  <section id="player" class="player hidden">
+    <div class="player-art">♪</div><div class="player-meta"><strong id="playerTitle">Song</strong><span id="playerArtist">Artist</span></div>
+    <button id="playerFav" class="player-action">♡</button><button id="playerToggle" class="play">▶</button>
+  </section>
+  <audio id="audio" preload="metadata"></audio>
+
+  <nav class="tabbar">
+    <button class="tab active" data-tab="home"><i>⌂</i><span>Home</span></button>
+    <button class="tab" data-tab="favorites"><i>♡</i><span>Favorites</span></button>
+    <button class="tab" data-tab="profile"><i>♬</i><span>Profile</span></button>
+  </nav>
+
+  <div id="fatal" class="fatal hidden"><img src="./mascot.png" alt=""><h2>Open me inside Telegram 🎀</h2><p id="fatalText">This Mini App needs Telegram to securely identify you.</p></div>
+  <script src="./app.js"></script>
+</body>
+</html>
