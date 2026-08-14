@@ -57,7 +57,7 @@
       row.innerHTML=`<button class="youtube-thumb" aria-label="Play ${esc(v.title)}"><img src="${esc(v.thumbnail_url||"")}" alt=""></button><div class="youtube-meta"><strong>${esc(v.title)}</strong><span>${esc(v.channel||"YouTube")}${v.duration?` · ${esc(v.duration)}`:""}</span></div><button class="youtube-watch" aria-label="Open ${esc(v.title)}">▶</button>`;
       row.querySelector(".youtube-thumb").onclick=()=>playYouTube(v);
       row.querySelector(".youtube-meta").onclick=()=>playYouTube(v);
-      row.querySelector(".youtube-watch").onclick=e=>{e.stopPropagation();openYouTube(v)};
+      row.querySelector(".youtube-watch").onclick=e=>{e.stopPropagation();playYouTube(v)};
       box.appendChild(row);
     });
   }
@@ -89,9 +89,10 @@
       const videos=normalizeYouTubeRows(data);renderYouTubeResults(videos);showView("youtube");
       if(!videos.length)toast("No YouTube videos found ▶️");
     }catch(e){
-      console.warn("YouTube search API unavailable, opening YouTube search instead:",e);showView("youtube");toast("Opening YouTube search ▶️");openYouTubeSearch(query);
-    }finally{loading(false)}
-  }
+  console.warn("YouTube search API unavailable:",e);
+  showView("youtube");
+  toast("YouTube search failed — try again ▶️");
+}finally{loading(false)}
   function loadYouTube(){showView("youtube");$("#youtubeSearchInput").focus()}
 
   async function doSearch(query){hideSuggestions();if(state.searchMode==="artist"){return loadArtist(query)};loading(true,state.searchMode==="lyrics"?`Finding a song from those lyrics…`:`Searching for “${query}”…`);haptic();try{const path=state.searchMode==="lyrics"?'/api/lyrics':'/api/search';const d=await api(path,{method:'POST',body:JSON.stringify({query})});state.listMode=state.searchMode==="lyrics"?'lyrics':'search';showView('list');renderTracks(d.tracks,state.searchMode==="lyrics"?'Lyrics match':`“${d.query}”`,state.searchMode==="lyrics"?'🎤 IDENTIFIED FROM LYRICS':'SEARCH RESULTS',`${d.tracks.length} matches from Music Bunny`)}catch(e){toast(state.searchMode==="lyrics"?'I couldn’t identify that lyric yet 🎤':'Try one of the suggestions 🎀');showView('home');if(state.searchMode==="song"){$("#searchInput").value=query;await loadSuggestions(query,true)}}finally{loading(false)}}
