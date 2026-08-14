@@ -93,7 +93,9 @@
   showView("youtube");
   toast("YouTube search failed — try again ▶️");
 }finally{loading(false)}
-  function loadYouTube(){showView("youtube");$("#youtubeSearchInput").focus()}
+}
+
+function loadYouTube(){showView("youtube");$("#youtubeSearchInput").focus()}
 
   async function doSearch(query){hideSuggestions();if(state.searchMode==="artist"){return loadArtist(query)};loading(true,state.searchMode==="lyrics"?`Finding a song from those lyrics…`:`Searching for “${query}”…`);haptic();try{const path=state.searchMode==="lyrics"?'/api/lyrics':'/api/search';const d=await api(path,{method:'POST',body:JSON.stringify({query})});state.listMode=state.searchMode==="lyrics"?'lyrics':'search';showView('list');renderTracks(d.tracks,state.searchMode==="lyrics"?'Lyrics match':`“${d.query}”`,state.searchMode==="lyrics"?'🎤 IDENTIFIED FROM LYRICS':'SEARCH RESULTS',`${d.tracks.length} matches from Music Bunny`)}catch(e){toast(state.searchMode==="lyrics"?'I couldn’t identify that lyric yet 🎤':'Try one of the suggestions 🎀');showView('home');if(state.searchMode==="song"){$("#searchInput").value=query;await loadSuggestions(query,true)}}finally{loading(false)}}
   async function loadFavorites(){loading(true,'Opening your favorites…');try{const d=await api('/api/favorites');state.listMode='favorites';showView('list');renderTracks(d.tracks,'My Favorites','SAVED WITH 🩷',`${d.tracks.length} saved song${d.tracks.length===1?'':'s'}`)}catch(e){toast(e.message)}finally{loading(false)}}
